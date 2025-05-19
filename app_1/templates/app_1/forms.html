@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Form</title>
+</head>
+<body>
+
+    {% comment %} <h1>HTML Form</h1> {% endcomment %}
+
+   <form method="post" action="{% url 'formpage' %}">  
+    {% comment %} --> form submit and goes on this url, the url where we want the data {% endcomment %}
+        {% csrf_token %}
+        <h1>Model Form</h1>
+        {{form.as_p}}
+        <input type="submit" value="Submit">
+    </form>
+
+
+
+
+
+
+
+
+
+
+        {% comment %} <!-- Color Input -->
+        <label for="favcolour">Favorite Color:</label>
+        <input type="color" id="favColour" value="{{colour}}" name="favcolour"><br><br>
+
+        <!-- Date Input -->
+        <label for="birthday">Birthday:</label>
+        <input type="date" id="birthday" value="{{birthday}}" name="birthday"><br><br>
+
+        <!-- Datetime-local Input -->
+        <label for="appointment">Appointment Date and Time:</label>
+        <input type="datetime-local" value="{{appointment}}" id="appointment" name="appointment"><br><br>
+
+        <!-- Email Input -->
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email"><br><br>
+        <br><br> {% endcomment %}
+        {% comment %} {{form}} {% endcomment %}
+        {% comment %} <h1>Django Form</h1>
+        {{djangoform.as_p}}
+        <br><br><br><br> {% endcomment %}
+</body>
+</html>
