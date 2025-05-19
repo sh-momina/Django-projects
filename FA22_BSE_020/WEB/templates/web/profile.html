@@ -1,0 +1,39 @@
+{% extends 'WEB/base.html' %}
+
+{% block title %}Profile{% endblock %}
+
+
+
+{% block content %}
+<h2>Your Profile</h2><br>
+<h3 style="color: blue;">All Uploaded Images</h3>
+{% if images %}
+    <ul>
+    {% for image in images %}
+        <li>
+            <h4>Name: {{ image.image_name }}</h4>
+            <h4>Upload date and time :{{ image.date }}</h4>
+            {{upload_images}}
+            <img style="width: 200px;" src="data:image/png;base64,{{ image.b64_data }}" alt="{{ image.image_name }}" 
+            /><br><br>
+            <hr>
+            {% comment %} <h4>Name: {{ image.image_name }}</h4>
+            <h4>Upload date and time :{{ image.date }}</h4>
+            <img style=" width: 200px;" src="data:image/png;base64,{{ image.b64_data }}" alt="{{ image.image_name }}" /><br><br> {% endcomment %}
+{% comment %}             
+            <form action="{% url 'delete_image' image.id %}" method="POST" style="display:inline;">
+                {% csrf_token %}
+                <!-- <button type="submit" class="btn btn-danger">Delete</button> -->
+                <a href="{% url 'delete_image' image.id %}" class="btn btn-primary">Delete</a>
+                <a href="{% url 'edit_image' image.id %}" class="btn btn-primary">Edit</a>
+                <a href="{% url 'add_comment' image.id %}" class="btn btn-secondary">Add Comment</a> {% endcomment %}
+            </form>
+            <hr>
+        </li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No images uploaded yet.</p>
+{% endif %}
+{% endblock %}
+

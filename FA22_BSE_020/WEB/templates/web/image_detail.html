@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ image.image_name }}</title>
+</head>
+<body>
+    <h1>{{ image.image_name }}</h1>
+    <img src="{% url 'display_image' image.id %}" alt="{{ image.image_name }}">
+    <p><strong>Image ID:</strong> {{ image.id }}</p>
+    <p><strong>Image Name:</strong> {{ image.image_name }}</p>
+    <p><strong>MIME Type:</strong> {{ image.mime_type }}</p>
+    <p><strong>Upload Date:</strong> {{ image.upload_date }}</p>
+
+    <a href="{% url 'image_list' %}">Back to Image List</a>
+</body>
+</html>

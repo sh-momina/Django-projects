@@ -1,0 +1,87 @@
+{% extends 'WEB/base.html' %}
+
+{% block title %}All Uploaded Images{% endblock %}
+
+{% block content %}
+<h2 class="text-center my-4">All Uploaded Images</h2>
+
+{% if images %}
+    <div class="container">
+        <div class="row">
+            <!-- Loop through each uploaded image and display it in a separate post -->
+            {% for image in images %}
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100">
+                        <!-- Display the uploaded image -->
+                        <img class="card-img-top img-fluid" 
+                             style="object-fit: cover; width: 200px;position: relative; left: 100px;" 
+                             src="data:image/png;base64,{{ image.b64_data }}" 
+                             alt="{{ image.image_name }}">
+
+                        <div class="card-body">
+                            <h5 class="card-title text-center">{{ image.image_name }}</h5>
+
+                            {% if request.user.is_authenticated %}
+                                <div class="text-center">
+                                    {% if request.user in image.likes.all %}
+                                        <!-- Show a filled heart icon if liked -->
+                                        <a href="{% url 'like_view' image.id %}">
+                                            <i class="fas fa-heart" style="color: Red; font-size: 24px;"></i>
+                                        </a>
+                                    {% else %}
+                                        <!-- Show an empty heart icon if not liked -->
+                                        <a href="{% url 'like_view' image.id %}">
+                                            <i class="far fa-heart" style="color: gray; font-size: 24px;"></i>
+                                        </a>
+                                    {% endif %}
+                                    <p>{{ image.likes.count }} like{{ image.likes.count|pluralize }}</p>
+                                </div>
+                            {% endif %}
+
+                            <p class="card-text text-center">
+                                Uploaded by: <strong>{{ image.user.username }}</strong>
+                            </p>
+
+                            <!-- Add Comment Button -->
+                            <a href="{% url 'add_comment' image.id %}" class="btn btn-outline-secondary btn-block">
+                                Add Comment
+                            </a>
+
+                            <!-- Edit and Delete buttons (only for the image uploader) -->
+                            {% if image.user == request.user %}
+                                <a href="{% url 'delete_image' image.id %}" class="btn btn-outline-danger btn-block">
+                                    Delete Post
+                                </a>
+                                <a href="{% url 'edit_image' image.id %}" class="btn btn-outline-primary btn-block">
+                                    Edit Post
+                                </a>
+                            {% endif %}
+
+                            <hr>
+
+                            <!-- Display comments for the image -->
+                            <h5 class="text-center">Comments:</h5>
+                            <ul class="list-unstyled">
+                                {% for comment in image.comments.all %}
+                                    <li class="mb-2">
+                                        <p><strong>{{ comment.user.username }}:</strong> {{ comment.content }}</p>
+                                        <small class="text-muted">{{ comment.created_at }}</small>
+                                        {% if comment.user == request.user or comment.image.user == request.user %}
+                                        <a href="{% url 'delete_comment' comment.id %}"class="btn btn-danger btn-sm delete-btn" >Delete</a>
+                                        {% endif %}
+                                    </li>
+                                {% empty %}
+                                    <p>No comments yet.</p>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% else %}
+    <p class="text-center">No images uploaded yet.</p>
+{% endif %}
+{% endblock %}
+<!--  -->

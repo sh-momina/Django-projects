@@ -1,0 +1,19 @@
+{% extends 'WEB/base.html' %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-center align-items-center vh-100" style="background-color: #fafafa;">
+    <div class="p-4 shadow-sm rounded bg-white" style="width: 100%; max-width: 400px;">
+        <h2 class="text-center" style="font-family: 'Arial', sans-serif; font-weight: 400; color: #262626;">Login</h2>
+        <form method="post" class="form-group">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-primary w-100" style="background-color: #3897f0; border: none; font-weight: bold;">Login</button>
+        </form>
+        <p class="text-center mt-3" style="font-family: 'Arial', sans-serif; color: #8e8e8e;">
+            Don't have an account? <a href="{% url 'signup' %}" style="color: #3897f0; font-weight: bold;">Sign up here</a>
+        </p>
+    </div>
+</div>
+{% endblock %}

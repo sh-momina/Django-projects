@@ -1,0 +1,32 @@
+{% extends 'WEB/base.html' %}
+
+{% block title %}Add Comment{% endblock %}
+
+{% block content %}
+<h2>{% if parent_comment %}Reply to Comment{% else %}Add a Comment{% endif %}</h2>
+
+<form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">
+        {% if parent_comment %}Reply{% else %}Add Comment{% endif %}
+    </button>
+</form><br>
+<a href="{% url 'all_images' %}"><button class="btn btn-secondary">Back to Image</button></a>
+{% endblock %}
+
+
+
+{% comment %} {% extends 'WEB/base.html' %}
+
+{% block title %}Add Comment{% endblock %}
+
+{% block content %}
+<h2>Add a Comment</h2>
+<form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">Add Comment</button>
+</form><br>
+<a href="{% url 'all_images' %}"><button>Back to Image</button></a>
+{% endblock %} {% endcomment %}

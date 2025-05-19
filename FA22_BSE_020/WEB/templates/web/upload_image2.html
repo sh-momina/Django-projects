@@ -1,0 +1,78 @@
+{% extends 'WEB/base.html' %}
+
+{% block title %}Upload Image{% endblock %}
+
+{% block content %}
+<h2>Upload Multiple Images</h2>
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+
+    <label for="id_image_data">Upload Images:</label>
+    <input type="file" name="image_data" accept="image/*" multiple required> <!-- Allow multiple images -->
+    <br><br>
+
+    <label for="id_image_titles">Image Titles:</label>
+    <div id="image_titles_container">
+        <!-- Dynamically generated input fields for titles -->
+        <input type="text" name="image_titles" placeholder="Enter image title" required>
+    </div>
+
+    <br><br>
+    <button type="submit">Upload Images</button>
+    <button><a style="color: black; text-decoration: none;" href="{% url 'profile' %}">Cancel</a></button>
+</form>
+
+<script>
+    // This JavaScript dynamically creates input fields for each image title
+    document.querySelector('[name="image_data"]').addEventListener('change', function (event) {
+        const imageTitlesContainer = document.getElementById('image_titles_container');
+        const fileInput = event.target;
+        const files = fileInput.files;
+        imageTitlesContainer.innerHTML = ''; // Clear previous inputs
+
+        for (let i = 0; i < files.length; i++) {
+            const titleInput = document.createElement('input');
+            titleInput.type = 'text';
+            titleInput.name = 'image_titles';  // Ensure all title inputs have the same name
+            titleInput.placeholder = `Enter title for image ${i + 1}`;
+            titleInput.required = true;
+            imageTitlesContainer.appendChild(titleInput);
+            imageTitlesContainer.appendChild(document.createElement('br'));
+        }
+    });
+</script>
+
+{% endblock %}
+
+
+
+
+{% comment %} {% extends 'WEB/base.html' %}
+
+{% block title %}Upload Image{% endblock %}
+
+{% block content %} {% endcomment %}
+{% comment %} <h2>Upload an Image</h2>
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <label for="id_image_data">Upload Image:</label>
+    <input type="file" name="image_data" accept="image/*" multiple required >
+    <br><br>
+    <button type="submit">Upload Image</button>
+    <button><a style="color: black; text-decoration: none;" href="{% url 'profile' %}">Cancel</a></button>
+</form> {% endcomment %}
+
+{% comment %} <form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <label for="id_image_data">Upload Images:</label>
+    <input type="file" name="image_data" accept="image/*" multiple required> <!-- Keep the multiple attribute -->
+    <br><br>
+    <button type="submit">Upload Images</button>
+    <button><a style="color: black; text-decoration: none;" href="{% url 'profile' %}">Cancel</a></button>
+</form>
+
+
+{% endblock %} {% endcomment %}
