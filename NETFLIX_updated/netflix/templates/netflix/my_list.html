@@ -1,0 +1,177 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My List - NetfliX</title>
+    <style>
+        /* General Body Styling */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: url("{% static 'media/back.jpg' %}") no-repeat center center fixed;
+            background-size: cover;
+            color: #fff;
+        }
+
+        /* Gallery Section */
+        .gallery {
+            padding: 40px 20px;
+        }
+
+        /* My List Heading */
+        .gallery h2 {
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 40px;
+            color: #e50914; /* Highlighted Title */
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8); /* Text shadow for visibility */
+        }
+
+        /* Video Row and Card */
+        .video-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            margin-bottom: 40px; /* Add space between the rows */
+        }
+
+        .video-card {
+            background-color: rgba(0, 0, 0, 0.8); /* Dark overlay for card */
+            border-radius: 8px;
+            padding: 20px;
+            width: 320px;
+            text-align: center;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.8);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .video-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.9);
+        }
+
+        .video-card video {
+            width: 100%;
+            height: auto;
+            border-radius: 5px;
+            border: 2px solid #e50914; /* Red Border */
+        }
+
+        .video-card h3 {
+            margin-top: 10px;
+            font-size: 22px;
+            color: #fff;
+        }
+
+        .video-card p {
+            font-size: 16px;
+            color: #aaa;
+        }
+
+        /* Movie Details */
+        .movie-details {
+            font-size: 14px;
+            color: #fff;
+            margin-top: 10px;
+            text-align: left;
+        }
+
+        .movie-details p {
+            margin-bottom: 5px;
+        }
+
+        .movie-details strong {
+            font-weight: bold;
+        }
+
+        /* Back to Home Button */
+        .back-button {
+            display: inline-block;
+            text-decoration: none;
+            background-color: #e50914; /* Netflix red */
+            color: #fff;
+            padding: 15px 25px;
+            font-size: 18px;
+            text-align: center;
+            border-radius: 5px;
+            margin-top: 40px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .back-button:hover {
+            background-color: #b80d0d; /* Darker red on hover */
+            transform: scale(1.05);
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="gallery">
+        <h2>My Movie Gallery</h2>
+        
+        <!-- Movie List -->
+        <div class="video-row">
+            {% if my_list_entries %}
+                {% for my_movie in my_list_entries %}
+                    <div class="video-card">
+                        <h3>{{ my_movie.movie.title }}</h3>
+                        {% if my_movie.video_data_b64 %}
+                            <video controls>
+                                <source src="data:video/mp4;base64,{{ my_movie.video_data_b64 }}" type="video/mp4">
+                            </video>
+                        {% else %}
+                            <p>No video available for this movie.</p>
+                        {% endif %}
+                        <div class="movie-details">
+                            <p><strong>Rating:</strong> {{ my_movie.movie.rating }}</p>
+                            <p><strong>Description:</strong> {{ my_movie.movie.description }}</p>
+                            <p><strong>Duration:</strong> {{ my_movie.movie.duration }}</p>
+                            <p><strong>Release Year:</strong> {{ my_movie.movie.release_year }}</p>
+                            <p><strong>Genre:</strong> {{ my_movie.movie.genre }}</p>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p>No movies in your list. Start adding some!</p>
+            {% endif %}
+        </div>
+        
+        <!-- Horror Movie List -->
+        <div class="video-row">
+            {% if my_list_entries1 %}
+                {% for my_movie in my_list_entries1 %}
+                    <div class="video-card">
+                        <h3>{{ my_movie.movie.title }}</h3>
+                        {% if my_movie.video_data_b64 %}
+                            <video controls>
+                                <source src="data:video/mp4;base64,{{ my_movie.video_data_b64 }}" type="video/mp4">
+                            </video>
+                        {% else %}
+                            <p>No video available for this movie.</p>
+                        {% endif %}
+                        <div class="movie-details">
+                            <p><strong>Rating:</strong> {{ my_movie.movie.rating }}</p>
+                            <p><strong>Description:</strong> {{ my_movie.movie.description }}</p>
+                            <p><strong>Duration:</strong> {{ my_movie.movie.duration }}</p>
+                            <p><strong>Release Year:</strong> {{ my_movie.movie.release_year }}</p>
+                            <p><strong>Genre:</strong> {{ my_movie.movie.genre }}</p>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p>No horror movies in your list. Start adding some!</p>
+            {% endif %}
+        </div>
+    </div>    
+    
+    <!-- Back to Home Button -->
+    <a style="position: relative; left: 750px; bottom: 70px;" href="{% url 'home' %}" class="back-button">Go Back to Home</a>
+
+</body>
+</html>

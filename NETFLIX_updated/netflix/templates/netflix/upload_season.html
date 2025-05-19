@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <!-- Image input should have 'name="image_data" -->
+         <label for="">image</label>
+        <input type="file" name="image_data" required>
+        <!-- Video input should have 'name="video_data" -->
+         <label for="">video</label>
+        <input type="file" name="video_data" required>
+        <button type="submit">Upload</button>
+    </form>
+
+
+</body>
+</html>

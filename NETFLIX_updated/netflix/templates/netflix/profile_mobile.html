@@ -1,0 +1,107 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Netflix Profile Mobile</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            background-color: #141414;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+        .container {
+            text-align: center;
+            margin-top: 50px;
+        }
+        .profile {
+            display: inline-block;
+            text-align: center;
+            cursor: pointer;
+            text-decoration: none;
+            margin: 15px;
+        }
+        .profile img {
+            width: 130px;
+            height: 130px;
+            border-radius: 10%;
+            border: 4px solid white;
+            box-shadow: 0px 4px 20px rgba(9, 137, 229, 0.298);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .profile img:hover {
+            transform: scale(1.2);
+            box-shadow: 0px 6px 30px white
+        }
+        .profile-name {
+            margin-top: 10px;
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #fff;
+            transition: color 0.3s ease;
+        }
+        .profile-name:hover {
+            color: white;
+        }
+        .title {
+            margin-bottom: 20px;
+            font-size: 2rem;
+            font-weight: 700;
+            color: white;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.8);
+        }
+        .netflix-logo {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            width: 120px;
+            height: auto;
+        }
+        .manage-profiles {
+            margin-top: 30px;
+        }
+        .manage-profiles button {
+            background-color: transparent;
+            color: gray;
+            font-size: 1rem;
+            font-weight: 600;
+            border: 2px solid white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+        }
+        .manage-profiles button:hover {
+            background-color: #c0b9b962;
+            color: #fff;
+            box-shadow: 0px 4px 15px rgba(243, 242, 242, 0.5);
+        }
+    </style>
+</head>
+<body>
+    <img src="https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg" alt="Netflix Logo" class="netflix-logo">
+    <div class="container">
+        <!-- Title -->
+        <div class="title">Who's watching?</div>
+        <!-- Mobile Profile -->
+        <a href="{% url 'home_mobile' %}" class="profile">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/0/0b/Netflix-avatar.png" alt="Mobile Profile">
+            <div class="profile-name">Mobile</div>
+        </a>
+    </div>
+    <div class="manage-profiles">
+        <a href="{% url 'manage_profile'%}">
+            <button>Manage Profiles</button>
+        </a>
+    </div>
+</body>
+</html>

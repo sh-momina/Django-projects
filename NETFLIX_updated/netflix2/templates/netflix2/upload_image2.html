@@ -1,0 +1,147 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload New Image</title>
+    <style>
+        /* Global Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Body Styling */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #141414;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+            background: url("{% static 'media/back.jpg' %}") repeat-y center center fixed;
+            background-size: cover;
+        }
+
+        /* Container Styling */
+        .upload-container {
+            width: 100%;
+            max-width: 500px;
+            background-color: rgba(0, 0, 0, 0.85); /* Semi-transparent black */
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(10px);
+        }
+
+        .upload-container h1 {
+            font-size: 2rem;
+            margin-bottom: 30px;
+            text-align: center;
+            color: white;
+        }
+
+        /* Form Styling */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            font-size: 1rem;
+            margin-bottom: 10px;
+            color: #ccc;
+            font-weight: bold;
+            display: block;
+        }
+
+        .form-group input[type="file"],
+        .form-group textarea,
+        .form-group input[type="text"] {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #333;
+            background-color: #222;
+            border-radius: 6px;
+            color: #fff;
+            font-size: 1rem;
+            margin-top: 5px;
+            transition: border-color 0.3s ease, background-color 0.3s ease;
+        }
+
+        .form-group input[type="file"]:hover,
+        .form-group textarea:hover,
+        .form-group input[type="text"]:hover {
+            border-color: #e50914;
+            background-color: #333;
+        }
+
+        .form-group textarea {
+            resize: none;
+            height: 100px;
+        }
+
+        /* Submit Button */
+        .upload-container button {
+            width: 100%;
+            padding: 15px;
+            background-color: #e50914; /* Netflix red */
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .upload-container button:hover {
+            background-color: #f40612;
+            transform: translateY(-2px);
+        }
+
+        /* Back Link */
+        .upload-container .back-link {
+            display: block;
+            margin-top: 20px;
+            text-align: center;
+            font-size: 1rem;
+            color: #e50914;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .upload-container .back-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="upload-container">
+        <h1>Recommendation Post</h1>
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            
+            <div class="form-group">
+                <label for="image_name">Image Name:</label>
+                <input type="text" name="image_name" id="image_name" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="description">Image Description:</label>
+                <textarea name="description" id="description" required></textarea>
+            </div>
+            
+            <div class="form-group">
+                <label for="image_data">Upload Image:</label>
+                <input type="file" name="image_data" id="image_data" required>
+            </div>
+            
+            <button type="submit">Upload</button>
+        </form>
+        <a href="{% url 'home' %}" class="back-link">Back to Home</a>
+    </div>
+</body>
+</html>

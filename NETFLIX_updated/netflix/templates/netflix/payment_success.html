@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Successful</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            background-color: #141414;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+        .container {
+            text-align: center;
+        }
+        .logo {
+            font-size: 2.5rem;
+            font-weight: 600;
+            color: #E50914;
+            margin-bottom: 20px;
+        }
+        .message {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+        }
+        .details {
+            font-size: 1.2rem;
+            color: #b3b3b3;
+            margin-bottom: 20px;
+        }
+        .redirect {
+            font-size: 1rem;
+            color: #b3b3b3;
+        }
+        .congrats {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            animation: pop 0.8s ease-in-out infinite alternate;
+        }
+        @keyframes pop {
+            0% {
+                transform: scale(1);
+            }
+            100% {
+                transform: scale(1.1);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">Netflix</div>
+        <div class="congrats">🎉 Congratulations! 🎉</div>
+        <div class="message">Payment Successful</div>
+        <div class="details">
+            <p>Your subscription plan: <strong>{{ plan }}</strong></p>
+            <p>Email: <strong>{{ email }}</strong></p>
+        </div>
+        <div class="redirect">
+            You will be redirected to the home page shortly...
+        </div>
+    </div>
+    <script>
+        // Redirect to the home page after 5 seconds
+        setTimeout(function () {
+            window.location.href = "/";
+        }, 5000);
+    </script>
+</body>
+</html>

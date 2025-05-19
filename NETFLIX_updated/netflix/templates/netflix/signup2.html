@@ -1,0 +1,219 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Netflix Subscription Plans</title>
+    <style>
+        body {
+            background: url("{% static 'media/back.jpg' %}") no-repeat center center fixed;
+            background-size: cover;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: black;
+            color: #e5e5e5;
+        }
+
+        .logo {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+        }
+
+        .logo img {
+            width: 120px;
+        }
+
+        .container {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 50px 20px;
+            text-align: center;
+            background-color: rgba(0, 0, 0, 0.9);
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+            color: #e50914;
+        }
+
+        p {
+            font-size: 16px;
+            color: #e5e5e5;
+        }
+
+        .plans {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+            gap: 20px;
+        }
+
+        .plan {
+            border: 1px solid #333;
+            border-radius: 12px;
+            width: 230px;
+            padding: 20px;
+            background-color: #333;
+            transition: transform 0.3s, box-shadow 0.3s, border 0.3s;
+            cursor: pointer;
+            height: 380px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            text-align: left;
+        }
+
+        .plan:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+            border-color: #e50914;
+        }
+
+        .plan.selected {
+            transform: translateY(-10px);
+            border: 2px solid #28a745;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        .plan h2 {
+            font-size: 20px;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, #e50914, #b00710);
+            color: #fff;
+            padding: 12px;
+            border-radius: 6px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .plan .price {
+            font-size: 18px;
+            margin-bottom: 10px;
+            color: #e50914;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .plan ul {
+            list-style: none;
+            padding: 0;
+            font-size: 14px;
+            color: #e5e5e5;
+            line-height: 1.8;
+        }
+
+        .plan ul li {
+            margin-bottom: 5px;
+        }
+
+        .plan .divider {
+            margin: 10px 0;
+            border: none;
+            border-top: 1px solid #555;
+        }
+
+        .button {
+            margin: 30px auto;
+            display: block;
+            background-color: #e50914;
+            color: white;
+            padding: 12px 40px;
+            font-size: 16px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            text-decoration: none;
+            width: 50%;
+            transition: background-color 0.3s, box-shadow 0.3s;
+        }
+
+        .button:hover {
+            background-color: #b00710;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        input[type="radio"] {
+            display: none;
+        }
+    </style>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const plans = document.querySelectorAll(".plan");
+
+            plans.forEach(plan => {
+                plan.addEventListener("click", () => {
+                    plans.forEach(p => p.classList.remove("selected"));
+                    plan.classList.add("selected");
+                    const input = plan.querySelector("input[type='radio']");
+                    if (input) {
+                        input.checked = true;
+                    }
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+    <div class="logo">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/7/7a/Logonetflix.png" alt="Netflix Logo">
+    </div>
+    <div class="container">
+        <h1>Step 2 of 3</h1>
+        <p>Choose the plan that’s right for you</p>
+        <form action="{% url 'signup3' %}" method="GET">
+            {% csrf_token %}
+            <div class="plans">
+                <div class="plan">
+                    <input type="radio" id="mobile" name="plan" value="Mobile" required>
+                    <h2>Mobile</h2>
+                    <div class="price">₹250</div>
+                    <hr class="divider">
+                    <ul>
+                        <li>Video quality: Fair</li>
+                        <li>Resolution: 480p</li>
+                        <li>Devices: Mobile, Tablet</li>
+                    </ul>
+                </div>
+                <div class="plan">
+                    <input type="radio" id="basic" name="plan" value="Basic">
+                    <h2>Basic</h2>
+                    <div class="price">₹450</div>
+                    <hr class="divider">
+                    <ul>
+                        <li>Video quality: Good</li>
+                        <li>Resolution: 720p</li>
+                        <li>Devices: Mobile, Tablet</li>
+                    </ul>
+                </div>
+                <div class="plan">
+                    <input type="radio" id="standard" name="plan" value="Standard">
+                    <h2>Standard</h2>
+                    <div class="price">₹800</div>
+                    <hr class="divider">
+                    <ul>
+                        <li>Video quality: Great</li>
+                        <li>Resolution: 1080p</li>
+                        <li>Devices: TV, Mobile, Tablet</li>
+                    </ul>
+                </div>
+                <div class="plan">
+                    <input type="radio" id="premium" name="plan" value="Premium">
+                    <h2>Premium</h2>
+                    <div class="price">₹1100</div>
+                    <hr class="divider">
+                    <ul>
+                        <li>Video quality: Best</li>
+                        <li>Resolution: 4K + HDR</li>
+                        <li>Devices: TV, Computer, Tablet</li>
+                    </ul>
+                </div>
+            </div>
+            <button type="submit" class="button">Next</button>
+        </form>
+    </div>
+</body>
+</html>

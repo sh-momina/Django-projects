@@ -1,0 +1,98 @@
+{% extends 'netflix2/base.html' %}
+
+{% block title %}All Uploaded Images{% endblock %}
+
+{% block content %}
+<style>
+    body {
+        {% comment %} background: url("{% static 'media/bgg.jpg' %}") no-repeat center center fixed; {% endcomment %}
+        background-size: cover;
+        color: white;
+    }
+
+    h2 {
+        color: #e50914; /* Netflix red */
+        font-weight: bold;
+        text-align: center;
+        margin-bottom: 30px;
+    }
+
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: rgba(0, 0, 0, 0.8); /* Slightly transparent background */
+        border-radius: 10px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
+    }
+
+    .card {
+        background-color: #222; /* Dark background for cards */
+        border: none;
+        border-radius: 8px;
+        width: 300px;
+        overflow: hidden;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .card:hover {
+        transform: scale(1.05);
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.7);
+    }
+
+    .card-img-top {
+        object-fit: contain;  /* Ensures the entire image fits within the container */
+        width: 300px;
+        height: 200px;  /* Fixed size */
+        border-bottom: 4px solid #e50914;
+    }
+
+    .card-body {
+        padding: 15px;
+        text-align: center;
+    }
+
+    .card-title {
+        color: white;
+        font-size: 1.2rem;
+        font-weight: bold;
+    }
+
+    .card-text {
+        color: #ccc;
+    }
+
+    .text-center {
+        margin-bottom: 20px;
+    }
+</style>
+
+<h2>All Uploaded Images</h2>
+
+<div class="container">
+    {% if images %}
+        <div class="row">
+            <!-- Loop through each uploaded image and display it in a separate card -->
+            {% for image in images %}
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100">
+                        <!-- Display the uploaded image -->
+                        <img class="card-img-top"
+                             src="data:image/png;base64,{{ image.b64_data }}" 
+                             alt="{{ image.image_name }}">
+
+                        <div class="card-body">
+                            <h5 class="card-title">{{ image.image_name }}</h5>
+                            <p class="card-text">Uploaded on: <strong>{{ image.date }}</strong></p>
+                            <h5 class="card-title">{{ image.description }}</h5>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p class="text-center">No images uploaded yet.</p>
+    {% endif %}
+</div>
+{% endblock %}

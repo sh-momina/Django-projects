@@ -1,0 +1,115 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Netflix Theme Login/Sign Up</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden;
+            font-family: Arial, sans-serif;
+        }
+
+        /* Fullscreen Background Video */
+        #background-video {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+        }
+
+        /* Netflix Text Style */
+        .netflix-text {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 36px;
+            font-weight: bold;
+            color: #e50914; /* Netflix red */
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-family: 'Arial', sans-serif; /* Replace with Netflix-like font if available */
+        }
+
+        /* Overlay for text/buttons */
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6); /* Slight dark overlay */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-align: center;
+        }
+
+        /* Netflix theme buttons */
+        .button-container {
+            margin-top: 20px;
+        }
+
+        .button {
+            margin: 0 10px; /* Spacing between buttons */
+            padding: 15px 30px;
+            font-size: 20px;
+            font-weight: bold;
+            text-transform: uppercase;
+            color: white;
+            background-color: #e50914; /* Netflix red */
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none; /* Remove underline */
+            display: inline-block;
+            transition: background-color 0.3s ease;
+        }
+
+        .button:hover {
+            background-color: #b20710; /* Darker red */
+        }
+
+        /* Headline text */
+        .overlay h1 {
+            font-size: 3em;
+            margin-bottom: 20px;
+        }
+
+        .overlay p {
+            font-size: 1.5em;
+            margin-bottom: 30px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Background Video -->
+    <video id="background-video" autoplay loop muted>
+        <source src="{% static 'media/main.mp4' %}" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+
+    <!-- Netflix Text -->
+    <div class="netflix-text">Netflix</div>
+
+    <!-- Content Overlay -->
+    <div class="overlay">
+        <h1>Welcome to Netflix</h1>
+        <p>Your favorite movies and TV shows, all in one place.</p>
+        <div class="button-container">
+            <a href="{% url 'login' %}" class="button">Login</a>
+            <a href="{% url 'signup' %}" class="button">Sign Up</a>
+        </div>
+    </div>
+</body>
+</html>

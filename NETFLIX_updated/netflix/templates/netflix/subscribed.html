@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Successful</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            background-color: #141414;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+        .container {
+            text-align: center;
+        }
+        .logo {
+            font-size: 2.5rem;
+            font-weight: 600;
+            color: #E50914;
+            margin-bottom: 20px;
+        }
+        .congrats {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            animation: pop 0.8s ease-in-out infinite alternate;
+        }
+        .message {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+        }
+        .details {
+            font-size: 1.2rem;
+            color: #b3b3b3;
+            margin-bottom: 20px;
+        }
+        .redirect-message {
+            font-size: 1rem;
+            color: #b3b3b3;
+        }
+        @keyframes pop {
+            0% {
+                transform: scale(1);
+            }
+            100% {
+                transform: scale(1.1);
+            }
+        }
+    </style>
+<script>
+    // Automatically redirect based on the subscription plan
+    const plan = "{{ plan|escapejs }}"; // Safely include the plan variable
+    let redirectUrl;
+
+    switch (plan) {
+        case "Mobile":
+            redirectUrl = "/netflix/profile_mobile";
+            break;
+        case "Basic":
+            redirectUrl = "/netflix/profile_basic";
+            break;
+        case "Standard":
+            redirectUrl = "/netflix/profile_standard";
+            break;
+        case "Premium":
+            redirectUrl = "/netflix/profile_premium";
+            break;
+        default:
+            redirectUrl = "/netflix/home";
+            break;
+    }
+
+    setTimeout(function () {
+        window.location.href = redirectUrl;
+    }, 2000);
+</script>
+
+</head>
+<body>
+    <div class="container">
+        <div class="logo">Netflix</div>
+        <div class="congrats">🎉 Congratulations! 🎉</div>
+        <div class="message">Payment Successful</div>
+        <div class="details">
+            <p>Email: <strong>{{ email }}</strong></p>
+        </div>
+        <div class="redirect-message">Please wait. Redirecting you to your Netflix screen in a few moments...</div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,88 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+        body {
+            background: url("{% static 'media/back.jpg' %}") no-repeat center center fixed;
+            background-size: cover;
+            color: #e5e5e5;
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            position: relative;
+            top: 120px;
+            max-width: 400px;
+            margin: auto;
+            background-color: rgba(0, 0, 0, 0.9); /* Transparent dark background */
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        h2 {
+            color: #e50914;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        form button {
+            background-color: #e50914; /* Netflix Red */
+            border: none;
+            color: #fff;
+            font-size: 16px;
+            font-weight: bold;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        form button:hover {
+            background-color: #b00710; /* Darker red for hover effect */
+        }
+
+        p {
+            text-align: center;
+            margin-top: 15px;
+        }
+
+        p a {
+            color: #e50914;
+            text-decoration: none;
+        }
+
+        p a:hover {
+            text-decoration: underline;
+            color: #e50914;
+        }
+
+        header h1 {
+            position: relative;
+            top: 20px;
+            left: 20px;
+            color: #e50914;
+            font-size: 1.5rem;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>NETFLIX</h1>
+    </header>
+    <div class="container mt-5">
+        <h2>Login</h2>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Login</button>
+        </form>
+        <p>Don't have an account? <a href="{% url 'signup' %}">Sign up here</a>.</p>
+    </div>
+</body>
+</html>

@@ -1,0 +1,219 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Profile</title>
+    <style>
+        /* Reset and base styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: url("{% static 'media/back.jpg' %}") no-repeat center center fixed;
+            background-size: cover;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            background: rgba(0, 0, 0, 0.85); /* Semi-transparent background */
+            width: 500px;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.6);
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        h2 {
+            text-align: center;
+            font-size: 2rem;
+            color: #e50914; /* Netflix red */
+            font-weight: bold;
+        }
+
+        /* Profile Info Section */
+        .profile-info {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .profile-info p {
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+            line-height: 1.5;
+        }
+
+        .profile-info a {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 10px 20px;
+            background-color: #e50914;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            transition: background-color 0.3s ease;
+        }
+
+        .profile-info a:hover {
+            background-color: #b20710;
+        }
+
+        /* Form Styling */
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            font-size: 1rem;
+            color: #ccc;
+            font-weight: bold;
+        }
+
+        .form-group input,
+        .form-group select {
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #333;
+            border-radius: 4px;
+            background-color: #333;
+            color: white;
+            outline: none;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            border-color: #e50914; /* Netflix red */
+        }
+
+        .btn {
+            padding: 12px 20px;
+            background-color: #e50914;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+            width: 100%;
+        }
+
+
+
+        .back-link {
+            text-align: center;
+        }
+
+        .back-link a {
+            color: #aaa;
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+        .back-link a:hover {
+            text-decoration: underline;
+        }
+         .form-container {
+        display: flex;
+        flex-direction: column;
+        gap: 20px; /* Increased spacing for better clarity */
+    }
+
+    /* Styling for form paragraphs (labels and inputs) */
+    .form-container p {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        margin-bottom: 20px;
+    }
+
+    .form-container label {
+        font-size: 1rem;
+        color: #ccc;
+        font-weight: bold;
+    }
+
+    .form-container input,
+    .form-container select {
+        padding: 12px;
+        font-size: 16px;
+        border: 2px solid #333;
+        border-radius: 6px;
+        background-color: #222; /* Darker background for input */
+        color: white;
+        outline: none;
+        transition: border-color 0.3s ease, background-color 0.3s ease;
+    }
+
+    /* Focus effect on inputs and selects */
+    .form-container input:focus,
+    .form-container select:focus {
+        border-color: #e50914; /* Netflix red */
+        background-color: #333; /* Slightly lighter background on focus */
+    }
+
+    /* Button Styling */
+    .btn {
+        padding: 14px 20px;
+        background-color: #e50914;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 16px;
+        transition: background-color 0.3s ease;
+        width: 100%;
+        margin-top: 20px;
+    }
+
+    .btn:hover {
+        background-color: #b20710;
+    }
+    </style>
+</head>
+<body>
+    <div class="container">
+        {% comment %} <h2>Manage Profile</h2> {% endcomment %}
+
+        <!-- Display Profile Info -->
+        <div class="profile-info"><br>
+            <h2>Profile Details:</h2><br>
+            <p><strong>Full Name:</strong> {{ user.full_name }}</p>
+            <p><strong>Email:</strong> {{ user.email }}</p>
+            <p><strong>Language:</strong> {{ user.language.language_name }}</p>
+        </div>
+
+        <!-- Profile Edit Form -->
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-container">
+                {{ form.as_p }} 
+            </div>
+        
+            <button type="submit" class="btn">Save Changes</button>
+        </form>
+
+        <div class="back-link">
+            <a href="{% url 'home'%}"> Back To Home</a>
+        </div>
+    </div>
+</body>
+</html>

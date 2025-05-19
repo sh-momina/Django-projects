@@ -1,0 +1,511 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Netflix-like Home Page</title>
+    <style>
+        /* General Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        /* Body Styling */
+        body {
+            background-color: #141414;
+            color: white;
+            overflow-x: hidden; /* Prevent horizontal scrolling on the body */
+        }
+
+        /* Header Styling */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 50px;
+            background-color: rgba(0, 0, 0, 0.8);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        header h1 {
+            color: #e50914;
+            font-size: 1.5rem;
+        }
+
+        header nav a {
+            margin-left: 10px; /* Decreased from 50px to 20px */
+            color: white;
+            text-decoration: none;
+            font-size: 1.1rem;
+            font-weight: 50;
+        }
+
+        header nav a:hover {
+            color: #e50914;
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: white;
+            font-size: 14px;
+            padding: 5px 10px;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: #e50914;
+        }
+
+        /* Profile Menu Styling */
+        .profile-menu {
+            position: relative;
+            display: inline-block;
+        }
+
+        .profile-logo {
+            width: 40px;
+            height: 40px;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .profile-logo img {
+            width: 100%;
+            border-radius: 50%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Dropdown Menu */
+        .dropdown-menu {
+            display: none; /* Initially hidden */
+            position: absolute;
+            top: 50px; /* Adjust according to the position of the profile icon */
+            right: 0;
+            background-color: #333;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            width: 200px;
+        }
+
+        .dropdown-menu a {
+            display: block;
+            padding: 8px 10px;
+            color: white;
+            text-decoration: none;
+            font-size: 14px;
+            transition: background-color 0.3s ease;
+        }
+
+        .dropdown-menu a:hover {
+            background-color: #c43a41;
+        }
+
+        /* Movies Section */
+        .movies-section {
+            padding: 20px 50px;
+        }
+
+        .movies-section h2 {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+        }
+
+        .movies-container-wrapper {
+            position: relative;
+            width: 100%;
+        }
+
+        .movies-row {
+            display: flex;
+            align-items: center;
+            overflow-x: auto; /* Horizontal scrolling */
+            width: 100%;
+            padding: 0 30px;
+            box-sizing: border-box;
+            margin-bottom: 30px;
+            white-space: nowrap; /* Prevent wrapping of the movies */
+        }
+
+        .movies-row::-webkit-scrollbar {
+            display: none; /* Hide the scrollbar */
+        }
+
+        .movies-container {
+            display: flex;
+            flex-wrap: nowrap;
+        }
+
+        .movie-card {
+            position: relative;
+            width: 200px; /* Increased size */
+            height: 300px; /* Increased size */
+            background-color: #444;
+            margin-right: 30px; /* Added space between the movies */
+            border-radius: 5px;
+            overflow: hidden;
+            flex-shrink: 0;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .movie-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .rank-number {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 50%; /* Covers half of the image */
+            height: 100%; /* Full height of the movie image */
+            font-size: 7rem; /* Increased size */
+            font-weight: bold;
+            color: #e50914;
+            z-index: 2; /* Ensure it's on top of the image */
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+            padding: 20px;
+            background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent background */
+        }
+
+        .movie-card:hover {
+            transform: scale(1.1);
+        }
+
+        /* Pop-up Menu */
+        .movie-popup {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-align: center;
+            border-radius: 5px;
+            padding: 10px;
+        }
+
+        .movie-card:hover .movie-popup {
+            display: flex;
+        }
+
+        .movie-popup h3 {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+        }
+
+        .movie-popup p {
+            font-size: 0.9rem;
+            margin-bottom: 5px;
+        }
+
+        .movie-popup span {
+            font-size: 0.8rem;
+            color: #b3b3b3;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 20px 0;
+            background-color: rgba(0, 0, 0, 0.9);
+        }
+
+        footer p {
+            color: #b3b3b3;
+            font-size: 0.9rem;
+        }
+
+        footer p a {
+            color: #e50914;
+            text-decoration: none;
+        }
+
+        footer p a:hover {
+            text-decoration: underline;
+        }
+
+        .feature-image-wrapper {
+            width: 100%;
+            height: 70vh; /* Full viewport height */
+            overflow: hidden;
+        }
+
+        .feature-image {
+            width: 100%;
+            height: 100%;
+        }
+
+        .feature-image video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Ensures the video covers the entire container */
+        }
+
+        #horror-section {
+            margin-top: -15px; /* Adjust the value to shift it upward */
+            padding-top: 10px; /* Optional: Adjust the padding to maintain proper spacing */
+        }
+
+        .scroll-button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(0, 0, 0, 0.5);
+            border: none;
+            color: white;
+            font-size: 2rem;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            border-radius: 50%;
+            z-index: 5;
+            display: none; 
+            justify-content: center;
+            align-items: center;
+        }
+
+        .scroll-button:hover {
+            background-color: rgba(229, 9, 20, 0.8);
+        }
+
+        .scroll-button.left {
+            left: 10px;
+        }
+
+        .scroll-button.right {
+            right: 10px;
+        }
+
+        .movies-container-wrapper:hover .scroll-button {
+            display: flex; /* Show the buttons when the wrapper is hovered */
+        }
+
+        .logo img {
+            width: 120px; /* Adjust the width of the logo */
+            height: auto; /* Maintain aspect ratio */
+            vertical-align: middle; /* Align the logo vertically in the header */
+        }
+
+    </style>
+</head><body>
+
+    {% csrf_token %}
+    <!-- Header -->
+    <header>
+        <div class="logo">
+            <a href="{% url 'home_basic' %}">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/7/7a/Logonetflix.png" alt="Netflix Logo">
+            </a>
+        </div>
+        <nav>
+            <a href="{% url 'home_basic' %}">Home</a>
+            <a href="{% url 'my_list'%}">My List</a>
+            <a href="{% url 'popular'%}">Popular</a>
+            <a href="{% url 'netflix2:upload_image2' %}">Upload Post</a>
+            <a href="{% url 'netflix2:profile' %}">View all Post</a>
+            <a href="{% url 'logout' %}">Logout</a>
+        
+            <div class="profile-menu" id="profile-menu">
+                <div style="margin-left: 60%;" class="profile-logo" onclick="toggleDropdown()">
+                    <img src="{% static 'media/user.png' %}" alt="Profile Logo">
+                </div>
+                <div class="dropdown-menu" id="dropdown-menu">
+                    <a href="{% url 'manage_profile'%}">Manage Profile</a>
+                    <a href="{% url 'accounts'%}">Account</a>
+                    <a href="{% url 'help_page' %}?redirect_url={% url 'home_basic' %}">Help</a>
+
+                </div>
+            </div>
+        </nav>
+        
+    </header>
+
+    <div class="feature-image-wrapper">
+        <div class="feature-image">
+            <video width="640" height="360" autoplay muted>
+                <source src="{% static 'media/cover_video2.mp4' %}" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        </div>
+    </div>
+
+    <!-- Movies Section -->
+    <div class="movies-section">
+        <h2>Trending Movies</h2>
+        <div class="movies-container-wrapper">
+            <button class="scroll-button left" onclick="scrollRowLeft('trending-row')">&#8249;</button>
+            <div class="movies-row" id="trending-row">
+                <div class="movies-container">
+                    {% for movie in movies %}
+                    <div class="movie-card">
+                        <a href="{% url 'movie_click' movie.id %}">
+                            {% if movie.image_base64 %}
+                                <img src="data:image/png;base64,{{ movie.image_base64 }}" alt="Movie Image" />
+                            {% else %}
+                                <p>No image available</p>
+                            {% endif %}
+                            <div class="movie-popup">
+                                <h3>{{ movie.title }}</h3>
+                                <p>Duration: {{ movie.duration }}</p>
+                                <p>Genre: {{ movie.genre }}</p>
+                                <span>Release Year: {{ movie.release_year }}</span>
+                            </div>
+                        </a>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <button class="scroll-button right" onclick="scrollRowRight('trending-row')">&#8250;</button>
+        </div>
+    </div>
+    
+    <div class="movies-section">
+        <h2>Top Ten Movies</h2>
+        <div class="movies-container-wrapper">
+            <div class="movies-row" id="trending-row">
+                <div class="movies-container">
+                    {% for movie in tmovies %}
+                    <div class="movie-card">
+                        <div class="rank-number">{{ forloop.counter }}</div>
+                        <a href="{% url 'movie_click_top_ten' movie.id %}">
+                            {% if movie.image_base64 %}
+                                <img src="data:image/png;base64,{{ movie.image_base64 }}" alt="Movie Image" />
+                            {% else %}
+                                <p>No image available</p>
+                            {% endif %}
+                            <div class="movie-popup">
+                                <h3>{{ movie.title }}</h3>
+                                <p>Duration: {{ movie.duration }}</p>
+                                <p>Genre: {{ movie.genre }}</p>
+                                <span>Release Year: {{ movie.release_year }}</span>
+                            </div>
+                        </a>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="movies-section" id="horror-section">
+        <h2>Scary Movies</h2>
+        <div class="movies-container-wrapper">
+            <button class="scroll-button left" onclick="scrollRowLeft('horror-row')">&#8249;</button>
+            <div class="movies-row" id="horror-row">
+                <div class="movies-container">
+                    {% for movie in hmovies %}
+                    <div class="movie-card">
+                        <a href="{% url 'movie_click_horror' movie.id %}">
+                            {% if movie.image_base64 %}
+                                <img src="data:image/jpeg;base64,{{ movie.image_base64 }}" alt="Movie Image" />
+                            {% else %}
+                                <p>No image available</p>
+                            {% endif %}
+                            <div class="movie-popup">
+                                <h3>{{ movie.title }}</h3>
+                                <p>Duration: {{ movie.duration }}</p>
+                                <p>Genre: {{ movie.genre }}</p>
+                                <span>Release Year: {{ movie.release_year }}</span>
+                            </div>
+                        </a>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <button class="scroll-button right" onclick="scrollRowRight('horror-row')">&#8250;</button>
+        </div>
+    </div>
+    <div class="movies-section">
+        <h2>Seasons</h2>
+        <div class="movies-container-wrapper">
+            <div class="movies-row" id="trending-row">
+                <div class="movies-container">
+                    {% for movie in season %}
+                    <div class="movie-card">
+                        <a href="{% url 'season_click' movie.id %}">
+                            {% if movie.image_base64 %}
+                                <img src="data:image/png;base64,{{ movie.image_base64 }}" alt="Movie Image" />
+                            {% else %}
+                                <p>No image available</p>
+                            {% endif %}
+                            <div class="movie-popup">
+                                <h3>{{ movie.title }}</h3>
+                                <p>Duration: {{ movie.duration }}</p>
+                                <p>Genre: {{ movie.genre }}</p>
+                                <span>Release Year: {{ movie.release_year }}</span>
+                            </div>
+                        </a>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 Netflix | <a href="#">Privacy Policy</a></p>
+    </footer>
+
+    <script>
+        // Prevent page scrolling when hovering over horizontal scrollable rows
+        const rows = document.querySelectorAll('.movies-row');
+
+        rows.forEach(row => {
+            row.addEventListener('wheel', function(e) {
+                if (e.deltaY !== 0) {
+                    e.preventDefault();
+                    row.scrollLeft += e.deltaY;
+                }
+            });
+        });
+
+        function toggleDropdown() {
+            const dropdownMenu = document.getElementById("dropdown-menu");
+            dropdownMenu.style.display = (dropdownMenu.style.display === 'block') ? 'none' : 'block';
+        }
+
+        window.addEventListener('click', function(event) {
+            const dropdownMenu = document.getElementById("dropdown-menu");
+            const profileMenu = document.getElementById("profile-menu");
+            if (!profileMenu.contains(event.target)) {
+                dropdownMenu.style.display = 'none';
+            }
+        });
+
+        function scrollRowLeft(rowId) {
+            const row = document.getElementById(rowId);
+            row.scrollBy({
+                left: -500,
+                behavior: 'smooth'
+            });
+        }
+
+        function scrollRowRight(rowId) {
+            const row = document.getElementById(rowId);
+            row.scrollBy({
+                left: 500,
+                behavior: 'smooth'
+            });
+        }
+    </script>
+
+</body>
+</html>

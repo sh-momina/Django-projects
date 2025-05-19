@@ -1,0 +1,151 @@
+{%load static%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}My App{% endblock %}</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <!-- Add Font Awesome for icons -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+</head>
+<style>
+
+    body {
+        background: url("{% static 'media/back.jpg' %}")
+    }
+    a:hover i {
+    color: red; /* Color change on hover */
+    cursor: pointer;
+}
+.image-container {
+    background-color: white;
+    padding: 20px;
+    margin: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.image {
+    width: 100%;
+    max-width: 500px;
+    display: block;
+    margin: 0 auto;
+}
+
+.like-section {
+    text-align: center;
+}
+
+button {
+    padding: 10px 20px;
+    font-size: 16px;
+    margin: 10px;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    background-color: #008CBA;
+    color: white;
+}
+
+button:hover {
+    background-color: #007B8D;
+}
+.delete-btn {
+    padding: 2px 8px; 
+    font-size: 12px;  
+    height: auto;   
+}
+
+    /* Styling the profile page */
+    .profile-container {
+        width: 100%;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 40px;
+        background-color: #141414;
+        color: white;
+        text-align: center;
+    }
+
+    .section-title {
+        font-size: 2.5rem;
+        color: #fff;
+        margin-bottom: 20px;
+        font-weight: bold;
+    }
+
+    /* Image gallery styles */
+    .image-gallery {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+        gap: 20px;
+        justify-items: center;
+        padding: 20px 0;
+    }
+
+    .image-card {
+        background-color: rgba(0, 0, 0, 0.8);
+        border-radius: 8px;
+        padding: 15px;
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+        max-width: 240px;
+        text-align: center;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .image-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+    }
+
+    .image-date {
+        font-size: 1rem;
+        margin-bottom: 10px;
+        color: #ccc;
+    }
+
+    .uploaded-image {
+        width: 100%;
+        height: 160px;
+        object-fit: cover; /* Ensures the image is resized and does not distort */
+        border-radius: 8px;
+        margin-bottom: 15px;
+        transition: transform 0.3s ease;
+    }
+
+    .uploaded-image:hover {
+        transform: scale(1.05); /* Slight zoom effect on hover */
+    }
+
+    .image-separator {
+        border: 0;
+        border-top: 1px solid #444;
+        margin-top: 15px;
+        opacity: 0.3;
+    }
+
+    /* No images message */
+    .no-images {
+        font-size: 1.2rem;
+        color: #ccc;
+        margin-top: 20px;
+    }
+
+
+</style>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <div>
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="container mt-4">
+        {% block content %}
+        {% endblock %}
+    </div>
+</body>
+</html>

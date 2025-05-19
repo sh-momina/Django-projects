@@ -1,0 +1,118 @@
+{%load static%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submit Complaint</title>
+    <style>
+        body {
+            background: url("{% static 'media/back.jpg' %}") no-repeat center center fixed;
+            background-size: cover;
+            color: #e5e5e5;
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            position: relative;
+            top: 100px;
+            max-width: 400px;
+            margin: auto;
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+        }
+
+        h1 {
+            color: #e50914;
+            text-align: center;
+            margin-bottom: 25px;
+            font-size: 28px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        form p {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 15px;
+        }
+
+        form input, form textarea {
+            background-color: #333;
+            color: #e5e5e5;
+            border: 1px solid #555;
+            border-radius: 5px;
+            padding: 10px;
+            margin-bottom: 15px;
+            transition: border-color 0.3s ease;
+        }
+
+        form input:focus, form textarea:focus {
+            outline: none;
+        }
+
+        form input.valid, form textarea.valid {
+            border-color: #28a745;
+        }
+
+        form input.invalid, form textarea.invalid {
+            border-color: #e50914;
+        }
+
+        button[type="submit"] {
+            background-color: #e50914;
+            color: white;
+            border: none;
+            padding: 10px;
+            font-size: 18px;
+            font-weight: bold;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #b00710;
+        }
+
+        .text-center {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .text-center a {
+            color: #e50914;
+            text-decoration: none;
+        }
+
+        .text-center a:hover {
+            text-decoration: underline;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+
+        <h1>Submit Your Complaint</h1>
+
+        <form method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Submit</button>
+        </form>
+
+        <div class="text-center">
+            <a href="{% url 'help_page' %}">Go back to Help</a>
+        </div>
+
+    </div>
+
+</body>
+</html>

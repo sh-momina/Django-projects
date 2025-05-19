@@ -1,0 +1,183 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ episode.title }}</title>
+    <style>
+        body {
+            background: url("{% static 'media/back.jpg' %}") no-repeat center center fixed;
+            background-size: cover;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start; /* Align to the top */
+            height: 100vh;
+            background-color: #141414;
+            padding-top: 30px; /* Adds more space at the top of the page */
+        }
+
+        .main-container {
+            max-width: 1200px;
+            width: 100%;
+            padding: 30px;
+            background: rgba(0, 0, 0, 0.85); /* Slight transparency */
+            border-radius: 12px;
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.8);
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+            height: auto;
+        }
+
+        .episode-details {
+            padding: 20px;
+            background-color: rgba(0, 0, 0, 0.8);
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.6);
+        }
+
+        .episode-details h1 {
+            font-size: 2.5em;
+            color: #e50914; /* Netflix Red */
+            margin-bottom: 10px;
+        }
+
+        .episode-details p {
+            font-size: 1.2em;
+            line-height: 1.5;
+            margin: 10px 0;
+        }
+
+        .main-video {
+            width: 100%;
+            height: 50vh;
+            border-radius: 12px;
+            object-fit: cover;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .main-video:hover {
+            transform: scale(1.05); /* Slight zoom on hover */
+        }
+
+        /* Episodes Section */
+        .episodes-section {
+            margin-top: 40px;
+        }
+
+        .episodes-section h2 {
+            font-size: 2.2em;
+            color: #e50914;
+            margin-bottom: 15px;
+        }
+
+        .episodes-container {
+            display: flex;
+            flex-direction: column; /* Stacked layout for episodes */
+            gap: 30px; /* Increased space between episodes */
+        }
+
+        .episode-card {
+            background: rgba(0, 0, 0, 0.8);
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.7);
+            width: 100%; /* Full width for each episode */
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .episode-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.9);
+        }
+
+        .episode-card h3 {
+            color: #fff;
+            margin-bottom: 10px;
+        }
+
+        .episode-card a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .episode-card a:hover {
+            color: #e50914;
+        }
+
+        /* Responsiveness */
+        @media (max-width: 768px) {
+            .main-video {
+                height: 40vh; /* Adjust video size for smaller screens */
+            }
+
+            .episode-card {
+                width: 100%; /* Full width for smaller screens */
+            }
+
+            .episodes-section h2 {
+                font-size: 1.8em;
+            }
+
+            .episode-details h1 {
+                font-size: 2.2em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="main-container">
+        <div class="episode-details">
+            <h1>{{ episode.title }}</h1>
+            <p><strong>Duration:</strong> {{ episode.duration }}</p>
+            <p><strong>Release Date:</strong> {{ episode.release_date }}</p>
+            <p>{{ episode.description }}</p>
+
+            {% if video_base64 %}
+                <video controls class="main-video">
+                    <source src="data:video/mp4;base64,{{ video_base64 }}" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            {% else %}
+                <p>No video available for this episode.</p>
+            {% endif %}
+        </div>
+
+        <div class="episodes-section">
+            <h2>Other Episodes in This Season</h2>
+            <div class="episodes-container">
+                {% for ep in episodes %}
+                    <div class="episode-card" onclick=window.location.href ="{% url 'episode_play' season.id ep.id %}">
+                        <h3>{{ ep.title }}</h3>
+                        <a href="{% url 'episode_play' season.id ep.id %}">
+                            Play Episode
+                        </a>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+        <a href="{{ redirect_url }}" class="back-link" style="
+    display: inline-block;
+    text-decoration: none;
+    text-align: center;
+    color: white;
+    background-color:rgb(255, 0, 0);
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: bold;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s ease;
+">Go back to Home</a>
+
+    </div>
+</body>
+</html>
