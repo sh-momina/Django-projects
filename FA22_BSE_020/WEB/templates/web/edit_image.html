@@ -1,0 +1,33 @@
+{% extends 'WEB/base.html' %}
+
+{% block title %}Edit Image{% endblock %}
+
+{% block content %}
+<h2>Edit Image</h2>
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <br>
+    <button type="submit">Save Changes</button>
+    <a href="{% url 'profile' %}"><button>Return Back</button></a>
+</form>
+
+{% endblock %}
+
+
+
+{% comment %} {% extends 'WEB/base.html' %}
+
+{% block title %}Edit Image{% endblock %}
+
+{% block content %}
+<h2>Edit Image</h2>
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <br>
+    <button type="submit">Save Changes</button>
+    <a href="{% url 'profile' %}"><button>Return Back</button></a>
+</form>
+
+{% endblock %} {% endcomment %}

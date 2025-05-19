@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+     
+    <h1 class="text-center my-3">Update Data</h1>
+    <!-- <form method="post" action="{% url 'crud' %}"></form> -->
+    <form method="post" action="{% url 'update_task' data.id %}">
+
+    <div class="form-control">
+        {% csrf_token %}
+        {{form.as_p}}
+        <input style="width: 120px; height: 50px; border-radius: 20px;" type="submit" value="Update">
+    </div>
+    </form>
+
+</body>
+</html>

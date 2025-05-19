@@ -1,0 +1,143 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload New Image</title>
+    <style>
+        /* General reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: rosybrown;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        /* Container for the upload form */
+        .upload-container {
+            width: 100%;
+            max-width: 600px;
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .upload-container h1 {
+            font-size: 1.8rem;
+            margin-bottom: 25px;
+            text-align: center;
+            color: #333;
+        }
+
+        /* Form group styling */
+        .upload-container .form-group {
+            margin-bottom: 20px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Label styling */
+        .upload-container .form-group label {
+            font-size: 1rem;
+            margin-bottom: 6px;
+            color: #444;
+            font-weight: bold;
+        }
+
+        /* Input and textarea styling */
+        .upload-container .form-group input[type="file"],
+        .upload-container .form-group input[type="text"],
+        .upload-container .form-group textarea {
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 1rem;
+            color: #333;
+            transition: border-color 0.3s, box-shadow 0.3s;
+            outline: none;
+        }
+
+        /* Adding focus effect */
+        .upload-container .form-group input[type="file"]:focus,
+        .upload-container .form-group input[type="text"]:focus,
+        .upload-container .form-group textarea:focus {
+            border-color: #888;
+            box-shadow: 0 0 5px rgba(136, 136, 136, 0.5);
+        }
+
+        /* Textarea styling */
+        .upload-container .form-group textarea {
+            resize: vertical;
+            height: 100px;
+        }
+
+        /* Button styling */
+        .upload-container .upload-btn {
+            width: 100%;
+            padding: 12px;
+            background-color: rosybrown;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s;
+            font-weight: bold;
+        }
+
+        .upload-container .upload-btn:hover {
+            background-color: #c09292;
+            transform: translateY(-1px);
+        }
+
+        /* Back link styling */
+        .upload-container .back-link {
+            display: block;
+            margin-top: 20px;
+            text-align: center;
+            font-size: 1rem;
+            color: rosybrown;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .upload-container .back-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="upload-container">
+        <h1>Upload New Image</h1>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="id_image_file">Choose Images</label>
+                <input type="file" name="image" multiple required>
+            </div>
+            <div class="form-group">
+                <label for="id_title">Title</label>
+                <input type="text" name="title" required>
+            </div>
+            <div class="form-group">
+                <label for="id_description">Description</label>
+                <textarea name="description" required></textarea>
+            </div>
+            <button type="submit" class="upload-btn">Upload</button>
+        </form>
+        <a href="{% url 'iimage_test:image_list' %}" class="back-link">Back to Gallery</a>
+    </div>
+</body>
+</html>

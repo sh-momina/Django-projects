@@ -1,0 +1,22 @@
+{% extends "WEB/upload_image.html" %}  <!-- This line tells Django to use the layout from upload_extend.html -->
+
+{% block title %}Upload Images Here{% endblock %}  <!-- Override the title block -->
+
+{% block content %}
+<p>Uploaded images are going to be saved in the database.</p>
+
+<h1>Upload Image</h1>
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}  <!-- Render the form fields -->
+    <button type="submit" style="height: 30px; width: 100px; border-radius: 20px;">Upload</button>
+</form>
+
+{% if image %}
+    <h2>Uploaded Image:</h2>
+    <img src="{% url 'display_image' image.id %}" alt="{{ image.image_name }}">
+{% endif %}
+
+<br>
+<a href="{% url 'image_list' %}">View All Images</a>
+{% endblock %}
